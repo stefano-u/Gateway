@@ -44,22 +44,36 @@ class _HomePageState extends State<HomePage> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Broceries'),
-        ),
         body: Container(
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              if (index < _listUsers.length) {
-                return UserCard(
-                  user: _listUsers[index],
-                );
-              }
-              return null;
-            },
-          ),
+          child: Row(
+
+          )
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Home'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Account'),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+//ListView.builder(
+//itemBuilder: (context, index) {
+//if (index < _listUsers.length) {
+//return UserCard(
+//user: _listUsers[index],
+//);
+//}
+//return null;
+//},
+//),

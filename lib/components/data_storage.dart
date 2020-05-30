@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis/vision/v1.dart';
 import 'package:rookiehacks/classes/user.dart';
 
 class UserDataContainer extends StatefulWidget {
@@ -17,10 +18,18 @@ class UserDataContainer extends StatefulWidget {
 class UserDataContainerState extends State<UserDataContainer> {
   List<User> listUsers = [];
   List<String> messages = ['Hello there!'];
+  WebLabel webLabel  = new WebLabel();
 
   void updateMessages(String newMessage) {
     setState(() {
       messages.add(newMessage);
+    });
+  }
+
+  void updateWebLabel(WebLabel webLabel) {
+    setState(() {
+      messages.add(webLabel.toString());
+//      this.webLabel = webLabel;
     });
   }
 

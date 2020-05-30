@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rookiehacks/components/camera.dart';
 import 'data_storage.dart';
 
 class ChatInput extends StatefulWidget {
@@ -20,6 +21,15 @@ class _ChatInputState extends State<ChatInput> {
   // Event handler when the user taps outside of the login page
   void _hideKeyboard() {
     FocusScope.of(context).requestFocus(new FocusNode());
+  }
+
+  void _navigateToCamera() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Camera(),
+      ),
+    );
   }
 
   @override
@@ -58,7 +68,10 @@ class _ChatInputState extends State<ChatInput> {
               margin: new EdgeInsets.symmetric(horizontal: 8.0),
               child: new IconButton(
                 icon: new Icon(Icons.send),
-                onPressed: () => {addMessage(textEditingController.text)},
+                onPressed: () {
+//                  addMessage(textEditingController.text);
+                  _navigateToCamera();
+                },
               ),
             ),
             color: Colors.white,
