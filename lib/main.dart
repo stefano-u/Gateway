@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rookiehacks/components/data_storage.dart';
 import 'package:rookiehacks/pages/chat_page.dart';
+import 'package:rookiehacks/pages/grocery_list_page.dart';
 import 'package:rookiehacks/pages/home_page.dart';
 
 void main() => runApp(MyApp());
@@ -13,9 +14,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Broceries',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
         ),
         home: HomePage(),
+        onGenerateRoute: generateRoute,
       ),
     );
   }
@@ -26,6 +28,8 @@ class MyApp extends StatelessWidget {
         return MaterialPageRoute(builder: (_) => HomePage());
       case ChatPage.id:
         return MaterialPageRoute(builder: (_) => ChatPage());
+      case GroceryListPage.id:
+        return MaterialPageRoute(builder: (_) => GroceryListPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
