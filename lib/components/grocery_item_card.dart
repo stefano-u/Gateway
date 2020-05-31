@@ -43,6 +43,7 @@ class _GroceryItemCardState extends State<GroceryItemCard> {
               Navigator.pop(context);
             },
           ),
+          SizedBox(height: 10,),
           FlatButton(
             child: Text(
               'Cancel',

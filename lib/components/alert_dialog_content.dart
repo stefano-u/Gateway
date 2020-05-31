@@ -37,57 +37,21 @@ class _AlertDialogContentState extends State<AlertDialogContent> {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.only(left: 5),
+                    padding: const EdgeInsets.only(left: 10),
                     child: Text(
                       widget.item.name,
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
               ),
             ),
 
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Expanded(
-                    child: OutlineButton(
-                      shape: CircleBorder(),
-                      child: Icon(Icons.remove),
-                      onPressed: () {
-                        if (widget.item.count > 0) {
-                          setState(() {
-                            widget.item.count--;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  Text(
-                    widget.item.count.toString(),
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 24,
-                    ),
-                  ),
-                  Expanded(
-                    child: OutlineButton(
-                      shape: CircleBorder(),
-                      child: Icon(Icons.add),
-                      onPressed: () {
-                        setState(() {
-                          widget.item.count++;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
+
           ],
         ),
 
@@ -102,6 +66,41 @@ class _AlertDialogContentState extends State<AlertDialogContent> {
             ),
           ),
         ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            OutlineButton(
+              shape: CircleBorder(),
+              child: Icon(Icons.remove),
+              onPressed: () {
+                if (widget.item.count > 0) {
+                  setState(() {
+                    widget.item.count--;
+                  });
+                }
+              },
+            ),
+            Text(
+              widget.item.count.toString(),
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+            OutlineButton(
+              shape: CircleBorder(),
+              child: Icon(Icons.add),
+              onPressed: () {
+                setState(() {
+                  widget.item.count++;
+                });
+              },
+            ),
+          ],
+        ),
+
+        SizedBox(height: 20,)
       ],
     );
   }

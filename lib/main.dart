@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rookiehacks/components/data_storage.dart';
-import 'package:rookiehacks/pages/chat_page.dart';
 import 'package:rookiehacks/pages/grocery_list_page.dart';
 import 'package:rookiehacks/pages/home_page.dart';
+import 'package:rookiehacks/pages/pickup_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,10 +26,10 @@ class MyApp extends StatelessWidget {
     switch (settings.name) {
       case HomePage.id:
         return MaterialPageRoute(builder: (_) => HomePage());
-      case ChatPage.id:
-        return MaterialPageRoute(builder: (_) => ChatPage());
       case GroceryListPage.id:
         return MaterialPageRoute(builder: (_) => GroceryListPage());
+      case PickupPage.id:
+        return MaterialPageRoute(builder: (_) => PickupPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

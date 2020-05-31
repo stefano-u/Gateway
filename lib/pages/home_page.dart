@@ -62,18 +62,24 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: kBackgroundColor,
         appBar: AppBar(
-          leading: Icon(
-            Icons.shopping_cart,
-            color: Colors.black,
-            size: 30,
-          ),
-          title: Text(
-            'Gateway',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.w800,
-              fontSize: 14,
-              color: Colors.black,
-            ),
+          title: Row(
+            children: <Widget>[
+              Image.asset(
+                'assets/icon.png',
+                scale: 3,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                'Gateway',
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -153,12 +159,16 @@ class _HomePageState extends State<HomePage> {
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
+              icon: Icon(Icons.fastfood, size: 32),
+              title: Text('New List', style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 12),),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Account'),
+              icon: Icon(Icons.receipt, size: 32),
+              title: Text('Orders', style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 12),),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle, size: 32),
+              title: Text('Settings', style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 12),),
             ),
           ],
         ),

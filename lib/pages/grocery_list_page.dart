@@ -6,6 +6,7 @@ import 'package:rookiehacks/classes/grocery_item.dart';
 import 'package:rookiehacks/components/data_storage.dart';
 import 'package:rookiehacks/components/grocery_item_card.dart';
 import 'package:rookiehacks/constants.dart';
+import 'package:rookiehacks/pages/pickup_page.dart';
 
 class GroceryListPage extends StatefulWidget {
   static const String id = 'grocery_list_page';
@@ -16,11 +17,20 @@ class GroceryListPage extends StatefulWidget {
 
 class _GroceryListPageState extends State<GroceryListPage> {
   List<GroceryItem> _groceryItems = [];
+  int _groceryInCartCount = 0;
 
   void _navigateToHomePage() {
     Navigator.pop(context);
   }
 
+  void _getNumItemsWithPurchase() {
+    _groceryInCartCount = 0;
+    for (var i = 0; i < _groceryItems.length; i++) {
+      if (_groceryItems[i].count > 0) {
+        _groceryInCartCount++;
+      }
+    }
+  }
   List<Widget> _generateShoppingCarItems() {
     List<Widget> itemRow = [];
     for (var i = 0; i < _groceryItems.length; i++) {
@@ -52,6 +62,8 @@ class _GroceryListPageState extends State<GroceryListPage> {
   }
 
   void _showOrderResult() {
+    _getNumItemsWithPurchase();
+
     AlertDialog alert = AlertDialog(
       insetPadding: EdgeInsets.all(10),
       content: Column(
@@ -60,7 +72,7 @@ class _GroceryListPageState extends State<GroceryListPage> {
         children: <Widget>[
           Center(
             child: Text(
-              'Order these groceries?',
+              _groceryInCartCount > 0 ? 'Order these groceries?' : 'No items in cart',
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w500,
                 fontSize: 24,
@@ -72,7 +84,7 @@ class _GroceryListPageState extends State<GroceryListPage> {
             padding: const EdgeInsets.only(top: 20, bottom: 40),
             child: Center(
               child: Text(
-                'Double check these are the groceries you want to order.',
+                _groceryInCartCount > 0 ? 'Double check these are the groceries you want to order.' : 'Please select items to buy first!',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w500,
@@ -90,7 +102,7 @@ class _GroceryListPageState extends State<GroceryListPage> {
             ),
           ),
 
-          FlatButton(
+          _groceryInCartCount > 0 ? FlatButton(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
             ),
@@ -108,7 +120,7 @@ class _GroceryListPageState extends State<GroceryListPage> {
               Navigator.pop(context);
               _showTotal();
             },
-          ),
+          ) : Text(''),
           FlatButton(
             child: Text(
               'Cancel',
@@ -177,7 +189,7 @@ class _GroceryListPageState extends State<GroceryListPage> {
               ),
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, PickupPage.id);
             },
           ),
           FlatButton(

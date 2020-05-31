@@ -4,17 +4,15 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:googleapis/cloudbuild/v1.dart';
-import 'package:googleapis/vision/v1.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:googleapis/vision/v1.dart' as vision;
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:rookiehacks/classes/vision_provider.dart';
-import 'package:rookiehacks/components/selected_image_view.dart';
-import 'dart:io' as Io;
+import 'package:rookiehacks/pages/pickup_page.dart';
 
+import '../constants.dart';
 import 'data_storage.dart';
 
 // Source: https://flutter.dev/docs/cookbook/plugins/picture-using-camera#5-take-a-picture-with-the-cameracontroller
@@ -89,11 +87,175 @@ class _CameraState extends State<Camera> {
 
     VisionProvider vs = new VisionProvider();
     String data = await vs.search(base64Image);
-    _dataContainer.updateMessages(data);
+
+    Text widget = Text(
+      data,
+      style: GoogleFonts.inter(
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+      ),
+    );
+
+    _showOrderResult(widget);
+
+
+//    _dataContainer.updateMessages(data);
 
     _setLoadingIndicatorVisibility(false);
 
-    Navigator.pop(context);
+//    Navigator.pop(context);
+  }
+
+  void _showOrderResult(Widget widget) {
+    AlertDialog alert = AlertDialog(
+      insetPadding: EdgeInsets.all(10),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Center(
+            child: Text(
+              'Order these groceries?',
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 40),
+            child: Center(
+              child: Text(
+                'Double check these are the groceries you want to order.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Color(0xFF666666)
+                ),
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 40.0),
+            child: widget,
+          ),
+
+          FlatButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100),
+            ),
+            color: kGreenColor,
+            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            child: Text(
+              'Confirm',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              _showTotal();
+            },
+          ),
+          FlatButton(
+            child: Text(
+              'Cancel',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: kGreenColor,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void _showTotal() {
+    AlertDialog alert = AlertDialog(
+      insetPadding: EdgeInsets.all(10),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text(
+            'Your estimated total is:',
+            textAlign: TextAlign.left,
+            style: GoogleFonts.inter(
+              fontWeight: FontWeight.w500,
+              fontSize: 24,
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 40),
+            child: Text(
+              '\$10.50',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w500,
+                fontSize: 32,
+              ),
+            ),
+          ),
+
+          FlatButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100),
+            ),
+            color: kGreenColor,
+            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            child: Text(
+              'Place Order',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, PickupPage.id);
+            },
+          ),
+          FlatButton(
+            child: Text(
+              'Cancel',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: kGreenColor,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   // Sets the visibility of the circular progress indicator (for loading)
